@@ -10,6 +10,7 @@ This is the first Python codes I made, in when I begin to learn Python language 
 
 Usage
 =====
+Now, it runs like this:
 
 ```pycon
 >>> from python-des import SimpleDES
@@ -20,7 +21,7 @@ Usage
 C0 B7 A8 D0 5F 3A 82 9C
 ```
 
-`des.encrypt()` returns a binary list, which is convenient for further handle.
+**INFO:* `des.encrypt()` returns a binary list, which is convenient for further handle.
 You can encrypt more text using one key, do `des.encrypt(text)` as well.
 
 Issues
