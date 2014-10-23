@@ -27,16 +27,13 @@ You can encrypt more text using one key, do `des.encrypt(text)` as well.
 Issues
 ======
 
-First
------
+### First
 Whatever, I need decrypt here.There is just encryption here, decrypt is a must.
 
-Second
-------
+### Second
 Debug infos, I think `logging` module can be used to do something else, or, unit test or `doctest` is also a better way to make it better.
 
-Third
------
+### Third
 Otherwise, now I use int type to process data, maybe `struct` module can help me speed it's run times up, and reduce space waste.
 
 
