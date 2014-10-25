@@ -9,6 +9,8 @@
 __author__ = "Usual"
 __date__ = "Oct 20, 2014"
 
+import functools
+
 class DESBasic(object):
 	''' Basic class for DES, I put some common function and variable here.
 		Class KeyGenerator and SimpleDes are subclass of this one.
@@ -100,6 +102,9 @@ class KeyGenerator(DESBasic):
 	__LC = (1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1)
 
 	def __init__(self, key):
+		self.permutateSelection1 = functools.partial(self.permutate, matrix = self.__PS1)
+		self.permutateSelection2 = functools.partial(self.permutate, matrix = self.__PS2)
+
 		self.__key = self.getBinMatrixFromHex(key)
 		self.verity()
 
@@ -112,12 +117,6 @@ class KeyGenerator(DESBasic):
 				return self.keys[n]
 		else:
 			raise ValueError("Argument need int, [%s] given." % type(n))
-
-	def permutateSelection1(self, key):
-		return self.permutate(key, self.__PS1)
-
-	def permutateSelection2(self, key):
-		return self.permutate(key, self.__PS2)
 
 	# Generate keys, saved into self.keys
 	def generate(self):
@@ -248,6 +247,12 @@ class SimpleDes(DESBasic):
 
 	def __init__(self, key = "AABB09182736CCDD"):
 		''' Generate keys.'''
+
+		self.initialPermutate = functools.partial(self.permutate, matrix = self.__IP)
+		self.inverseInitialPermutate = functools.partial(self.permutate, matrix =self.__IIP)
+		self.extendTrans = functools.partial(self.permutate, matrix = self.__ET)
+		self.replaceOperate = functools.partial(self.permutate, matrix = self.__PP)
+
 		self.keys = KeyGenerator(key)
 
 	def encrypt(self, plain = "123456ABCD132536"):
@@ -310,18 +315,6 @@ class SimpleDes(DESBasic):
 		result = self.selectCompressTrans(result)
 		result = self.replaceOperate(result)
 		return result
-
-	def initialPermutate(self, plain):
-		return self.permutate(plain, self.__IP)
-
-	def inverseInitialPermutate(self, plain):
-		return self.permutate(plain, self.__IIP)
-
-	def extendTrans(self, text):
-		return self.permutate(text, self.__ET)
-
-	def replaceOperate(self, text):
-		return self.permutate(text, self.__PP)
 
 	def selectCompressTrans(self, text):
 		texts = self.devide(text, self.rl)
